@@ -1,53 +1,64 @@
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
-const App = () => {
-  return (
-    <View
-      style={styles.container}
-      /*  style={{
-        backgroundColor: "pink",
-        textAlign: "center",
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }} */
-    >
-      <Text style={{ fontSize: 50, color: "white" }}>Hola Mundo</Text>
+import { useState } from "react";
+import uuid from "react-native-uuid";
+import { View, Text, StyleSheet } from "react-native";
+import ModalDelete from "./src/components/ModalDelete";
+import AddProduct from "./src/components/AddProduct";
+import ListProduct from "./src/components/ListProduct";
 
-      <View style={styles.inputContainer}>
-        <TextInput placeholder="¿Qué estás buscando?" style={styles.input} />
-        <Button
-          title="Agregar"
-          style={{ backgroundColor: "white", color: "black" }}
-        />
+const App = () => {
+  const [newTitleProduct, setNewTitleProduct] = useState("");
+  const [newPriceProduct, setNewPriceProduct] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [productSelected, setProductSelected] = useState({});
+  /* array de productos */
+  const [products, setProducts] = useState([]);
+
+  const handlerAddProduct = () => {
+    const newProduct = {
+      id: uuid.v4(),
+      title: newTitleProduct,
+      price: newPriceProduct,
+    };
+    setProducts((current) => [...current, newProduct]),
+      /* limpiar */
+      setNewTitleProduct("");
+    setNewPriceProduct("");
+  };
+
+  const handlerModal = (item) => {
+    setProductSelected(item);
+    setModalVisible(true);
+  };
+
+  const handlerDeleteProduct = () => {
+    /* filtra los productos y deja solamente los productos que el id sea diferente a ese ID */
+    setProducts((current) =>
+      current.filter((product) => product.id !== productSelected.id)
+    );
+    setModalVisible(false);
+  };
+  return (
+    <View style={styles.container}>
+      <Text style={{ fontSize: 50, color: "white", margin: 10 }}>
+        ¡Bienvenid@!
+      </Text>
+
+      <AddProduct
+        valueTitle={newTitleProduct}
+        valuePrice={newPriceProduct}
+        onChangeTitle={setNewTitleProduct}
+        onChangePrice={setNewPriceProduct}
+        addProduct={handlerAddProduct}
+      />
+      <View>
+        <ListProduct products={products} handlerModal={handlerModal} />
       </View>
-      <View style={styles.listContainer}>
-        <View style={styles.cardProduct}>
-          <Text>Producto 1</Text>
-          <Text>$3000</Text>
-          <Button title="Comprar" />
-        </View>
-      </View>
-      <View style={styles.listContainer}>
-        <View style={styles.cardProduct}>
-          <Text>Producto 2</Text>
-          <Text>$3000</Text>
-          <Button title="Comprar" />
-        </View>
-      </View>
-      <View style={styles.listContainer}>
-        <View style={styles.cardProduct}>
-          <Text>Producto 3</Text>
-          <Text>$3000</Text>
-          <Button title="Comprar" />
-        </View>
-      </View>
-      <View style={styles.listContainer}>
-        <View style={styles.cardProduct}>
-          <Text>Producto 4</Text>
-          <Text>$3000</Text>
-          <Button title="Comprar" />
-        </View>
-      </View>
+      <ModalDelete
+        product={productSelected}
+        visible={modalVisible}
+        onModal={handlerModal}
+        onDelete={handlerDeleteProduct}
+      />
     </View>
   );
 };
@@ -59,35 +70,6 @@ const styles = StyleSheet.create({
     justifyContent: "start",
     marginTop: 50,
     alignItems: "center",
-  },
-
-  inputContainer: {
-    flexDirection: "row",
-    alignSelf: "stretch",
-    justifyContent: "center",
-  },
-  input: {
-    borderWidth: 1,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    width: 200,
-    marginRight: 10,
-  },
-  button: {
-    backgroundColor: "white",
-    color: "black",
-  },
-  listContainer: {
-    backgroundColor: "white",
-    width: "100%",
-    marginTop: 20,
-    paddingTop: 10,
-    borderWidth: 1,
-  },
-  cardProduct: {
-    margin: 10,
-    justifyContent: "space-evenly",
-    flexDirection: "row",
   },
 });
 
