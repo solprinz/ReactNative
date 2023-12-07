@@ -8,10 +8,9 @@ import ListProduct from "./src/components/ListProduct";
 const App = () => {
   const [newTitleProduct, setNewTitleProduct] = useState("");
   const [newPriceProduct, setNewPriceProduct] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-  const [productSelected, setProductSelected] = useState({});
-  /* array de productos */
   const [products, setProducts] = useState([]);
+  const [productSelected, setProductSelected] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handlerAddProduct = () => {
     const newProduct = {
@@ -19,24 +18,31 @@ const App = () => {
       title: newTitleProduct,
       price: newPriceProduct,
     };
-    setProducts((current) => [...current, newProduct]),
-      /* limpiar */
-      setNewTitleProduct("");
+
+    setProducts((current) => [...current, newProduct]);
+    setNewTitleProduct("");
     setNewPriceProduct("");
+    console.log("Se agregó nuevo producto.");
   };
 
   const handlerModal = (item) => {
     setProductSelected(item);
     setModalVisible(true);
+    console.log("Modal ejecutado");
   };
-
   const handlerDeleteProduct = () => {
-    /* filtra los productos y deja solamente los productos que el id sea diferente a ese ID */
     setProducts((current) =>
       current.filter((product) => product.id !== productSelected.id)
     );
     setModalVisible(false);
+    console.log("Producto eliminado");
   };
+
+  const handlerCloseModal = () => {
+    setModalVisible(false);
+    console.log("Modal cerrado");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 50, color: "white", margin: 10 }}>
@@ -51,13 +57,14 @@ const App = () => {
         addProduct={handlerAddProduct}
       />
       <View>
-        <ListProduct products={products} handlerModal={handlerModal} />
+        <ListProduct products={products} onModal={handlerModal} />
       </View>
       <ModalDelete
         product={productSelected}
         visible={modalVisible}
         onModal={handlerModal}
         onDelete={handlerDeleteProduct}
+        onClose={handlerCloseModal}
       />
     </View>
   );

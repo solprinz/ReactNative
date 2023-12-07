@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, Button } from "react-native";
-import React from "react";
 
-const CardProduct = ({ item, handlerModal }) => {
+const CardProduct = ({ item, onModal }) => {
   return (
     <View>
       <View style={styles.cardProduct}>
         <Text style={styles.text}>{item.title}</Text>
         <Text style={styles.text}>${item.price}</Text>
-        <Button title="Eliminar" onPress={() => handlerModal(item)} />
+        <Button title="Eliminar" onPress={() => onModal(item)} />
       </View>
     </View>
   );

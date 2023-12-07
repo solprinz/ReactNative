@@ -1,24 +1,17 @@
-import { StyleSheet, View, FlatList, Text } from "react-native";
-import React from "react";
+import { StyleSheet, View, FlatList } from "react-native";
 import CardProduct from "./cardProduct";
 
-const ListProduct = ({ products, handlerModal }) => {
+const ListProduct = ({ products, onModal }) => {
   return (
-    <View>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={products}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <CardProduct handlerModal={handlerModal} item={item} />
-          )}
-        ></FlatList>
-      </View>
+    <View style={styles.listContainer}>
+      <FlatList
+        data={products}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <CardProduct item={item} onModal={onModal} />}
+      />
     </View>
   );
 };
-
-export default ListProduct;
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -27,3 +20,5 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 });
+
+export default ListProduct;

@@ -1,25 +1,22 @@
-import { StyleSheet, Text, View, Modal, Button, Pressable } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Modal, Button } from "react-native";
 
-const ModalDelete = ({ product, visible, onModal, onDelete }) => {
+const ModalDelete = ({ product, visible, onModal, onDelete, onClose }) => {
   return (
     <Modal visible={visible}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalText}>
-            ¿Está seguro que desea eliminar el producto {product.title}?
+            ¿Esta seguro que quiere borrar el producto {product.title}?
           </Text>
           <View style={styles.modalButtons}>
             <Button title="Confirmo" onPress={onDelete} />
-            <Button title="Cerrar" onPress={() => onModal(false)} />
+            <Button title="Cerrar" onPress={onClose} />
           </View>
         </View>
       </View>
     </Modal>
   );
 };
-
-export default ModalDelete;
 
 const styles = StyleSheet.create({
   modalContainer: {
@@ -46,3 +43,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default ModalDelete;
