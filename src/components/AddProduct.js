@@ -1,5 +1,4 @@
 import { StyleSheet, TextInput, Button, View, Text } from "react-native";
-import React from "react";
 
 const AddProduct = ({
   valueTitle,

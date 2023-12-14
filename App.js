@@ -1,82 +1,36 @@
-import { useState } from "react";
-import uuid from "react-native-uuid";
 import { View, Text, StyleSheet } from "react-native";
-import ModalDelete from "./src/components/ModalDelete";
-import AddProduct from "./src/components/AddProduct";
-import ListProduct from "./src/components/ListProduct";
+import Home from "./src/screens/Home";
+import ItemListCategories from "./src/screens/ItemListCategories";
+import { useFonts } from "expo-font";
+import { useState } from "react";
 
 const App = () => {
-  const [newTitleProduct, setNewTitleProduct] = useState("");
-  const [newPriceProduct, setNewPriceProduct] = useState("");
-  const [products, setProducts] = useState([]);
-  const [productSelected, setProductSelected] = useState({});
-  const [modalVisible, setModalVisible] = useState(false);
+  const [categorySelected, setCategorySelected] = useState("");
 
-  const handlerAddProduct = () => {
-    const newProduct = {
-      id: uuid.v4(),
-      title: newTitleProduct,
-      price: newPriceProduct,
-    };
+  const [fontLoaded] = useFonts({
+    Playfair: require("./assets/Fonts/PlayfairDisplay-VariableFont_wght.ttf"),
+  });
 
-    setProducts((current) => [...current, newProduct]);
-    setNewTitleProduct("");
-    setNewPriceProduct("");
-    console.log("Se agregó nuevo producto.");
-  };
-
-  const handlerModal = (item) => {
-    setProductSelected(item);
-    setModalVisible(true);
-    console.log("Modal ejecutado");
-  };
-  const handlerDeleteProduct = () => {
-    setProducts((current) =>
-      current.filter((product) => product.id !== productSelected.id)
-    );
-    setModalVisible(false);
-    console.log("Producto eliminado");
-  };
-
-  const handlerCloseModal = () => {
-    setModalVisible(false);
-    console.log("Modal cerrado");
-  };
-
+  if (!fontLoaded) return null;
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 50, color: "white", margin: 10 }}>
-        ¡Bienvenid@!
-      </Text>
-
-      <AddProduct
-        valueTitle={newTitleProduct}
-        valuePrice={newPriceProduct}
-        onChangeTitle={setNewTitleProduct}
-        onChangePrice={setNewPriceProduct}
-        addProduct={handlerAddProduct}
-      />
-      <View>
-        <ListProduct products={products} onModal={handlerModal} />
-      </View>
-      <ModalDelete
-        product={productSelected}
-        visible={modalVisible}
-        onModal={handlerModal}
-        onDelete={handlerDeleteProduct}
-        onClose={handlerCloseModal}
-      />
+      {categorySelected ? (
+        <ItemListCategories category={categorySelected} />
+      ) : (
+        <Home setCategorySelected={setCategorySelected} />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "pink",
+    backgroundColor: "",
     flex: 1,
     justifyContent: "start",
     marginTop: 50,
     alignItems: "center",
+    fontFamily: "Playfair",
   },
 });
 

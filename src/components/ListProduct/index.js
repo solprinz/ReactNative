@@ -1,5 +1,5 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import CardProduct from "./cardProduct";
+import CardProduct from "./cardProduct.js";
 
 const ListProduct = ({ products, onModal }) => {
   return (

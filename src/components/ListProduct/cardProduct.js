@@ -6,6 +6,7 @@ const CardProduct = ({ item, onModal }) => {
       <View style={styles.cardProduct}>
         <Text style={styles.text}>{item.title}</Text>
         <Text style={styles.text}>${item.price}</Text>
+
         <Button title="Eliminar" onPress={() => onModal(item)} />
       </View>
     </View>
