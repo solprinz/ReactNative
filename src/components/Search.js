@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     alignItems: "center",
-    /*    backgroundColor: colors.accent, */
+    backgroundColor: colors.background,
   },
   input: {
     width: 250,
     height: 40,
-    backgroundColor: "grey",
+    backgroundColor: "#f5f5f5",
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,

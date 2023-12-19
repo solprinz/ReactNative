@@ -1,25 +1,20 @@
-import { View, Text, StyleSheet } from "react-native";
-import Home from "./src/screens/Home";
-import ItemListCategories from "./src/screens/ItemListCategories";
+import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { useFonts } from "expo-font";
-import { useState } from "react";
+import { colors } from "./src/global/colors";
+import Navigator from "./src/navigation/Navigator";
 
 const App = () => {
-  const [categorySelected, setCategorySelected] = useState("");
-
   const [fontLoaded] = useFonts({
     Playfair: require("./assets/Fonts/PlayfairDisplay-VariableFont_wght.ttf"),
   });
 
   if (!fontLoaded) return null;
   return (
-    <View style={styles.container}>
-      {categorySelected ? (
-        <ItemListCategories category={categorySelected} />
-      ) : (
-        <Home setCategorySelected={setCategorySelected} />
-      )}
-    </View>
+    <>
+      <StatusBar backgroundColor={colors.primary} barStyle="default" />
+
+      <Navigator />
+    </>
   );
 };
 

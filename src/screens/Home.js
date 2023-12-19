@@ -1,25 +1,14 @@
 import { StyleSheet } from "react-native";
-import Header from "../components/Header";
 import Categories from "../components/Categories";
-import { colors } from "../global/colors";
 
-const Home = ({ setCategorySelected }) => {
+const Home = ({ navigation, route }) => {
   return (
     <>
-      <Header title="Categories" />
-      <Categories setCategorySelected={setCategorySelected} />
+      <Categories navigation={navigation} route={route} />
     </>
   );
 };
 
 export default Home;
 
-const styles = StyleSheet.create({
-  container: {
-    height: 50,
-    width: "100%",
-    justifyContent: "start",
-    alignItems: "center",
-    backgroundColor: colors.background,
-  },
-});
+const styles = StyleSheet.create({});
