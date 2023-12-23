@@ -4,7 +4,7 @@ import Categories from "../components/Categories";
 const Home = ({ navigation, route }) => {
   return (
     <>
-      <Categories navigation={navigation} route={route} />
+      <Categories navigation={navigation} />
     </>
   );
 };

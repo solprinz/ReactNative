@@ -6,14 +6,20 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { colors } from "../global/colors";
+import { useDispatch } from "react-redux";
+import { setProductSelected } from "../features/shop/shopSlice";
 
-const ProductItem = ({ item, navigation, route }) => {
+const ProductItem = ({ item, navigation }) => {
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
 
   return (
     <Pressable
       style={styles.container}
-      onPress={() => navigation.navigate("Product", { id: item.id })}
+      onPress={() => {
+        dispatch(setProductSelected(item.id));
+        navigation.navigate("Product", { id: item.id });
+      }}
     >
       <Image
         style={styles.image}

@@ -1,13 +1,19 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../global/colors";
-import CardShadow from "../Wrapper/CardShadow";
+import { setProductsFilteredByCategory } from "../features/shop/shopSlice";
+import { useDispatch } from "react-redux";
 
-const CategoryItem = ({ category, navigation }) => {
+const CategoryItem = ({ category, navigation, route }) => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <View style={styles.container}>
         <Pressable
-          onPress={() => navigation.navigate("Category", { category })}
+          onPress={() => {
+            dispatch(setProductsFilteredByCategory(category));
+            navigation.navigate("Category", { category });
+          }}
         >
           <Text style={styles.text}>{category}</Text>
         </Pressable>

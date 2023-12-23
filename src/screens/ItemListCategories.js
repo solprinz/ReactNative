@@ -1,38 +1,23 @@
-import {
-  StyleSheet,
-  FlatList,
-  Button,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
-import allProducts from "../data/products.json";
+import { StyleSheet, FlatList, Pressable, Text, View } from "react-native";
 import Search from "../components/Search";
 import ProductItem from "../components/ProductItem";
 import { colors } from "../global/colors";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const ItemListCategories = ({ navigation, route }) => {
+  const productsFilteredByCategory = useSelector(
+    (state) => state.shop.value.productsFilteredByCategory
+  );
   const [keyword, setKeyword] = useState("");
-  const [products, setProducts] = useState(allProducts);
-  const { category } = route.params;
+  const [products, setProducts] = useState(productsFilteredByCategory);
 
   useEffect(() => {
-    if (category) {
-      const productsCategory = allProducts.filter(
-        (product) => product.category === category
-      );
-      const productsFiltered = productsCategory.filter((product) =>
-        product.title.includes(keyword)
-      );
-      setProducts(productsFiltered);
-    } else {
-      const productsFiltered = allProducts.filter((product) =>
-        product.title.includes(keyword)
-      );
-      setProducts(productsFiltered);
-    }
-  }, [keyword]);
+    const productsFiltered = productsFilteredByCategory.filter((product) =>
+      product.title.includes(keyword)
+    );
+    setProducts(productsFiltered);
+  }, [keyword, productsFilteredByCategory]);
 
   return (
     <>

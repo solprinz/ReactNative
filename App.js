@@ -1,7 +1,9 @@
 import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { useFonts } from "expo-font";
 import { colors } from "./src/global/colors";
-import Navigator from "./src/navigation/Navigator";
+import TabNavigator from "./src/navigation/TabNavigator";
+import { store } from "./src/app/store";
+import { Provider } from "react-redux";
 
 const App = () => {
   const [fontLoaded] = useFonts({
@@ -9,11 +11,13 @@ const App = () => {
   });
 
   if (!fontLoaded) return null;
+
   return (
     <>
       <StatusBar backgroundColor={colors.primary} barStyle="default" />
-
-      <Navigator />
+      <Provider store={store}>
+        <TabNavigator />
+      </Provider>
     </>
   );
 };

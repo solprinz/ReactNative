@@ -1,16 +1,9 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import allProduct from "../data/products.json";
-import { useState, useEffect } from "react";
 import { colors } from "../global/colors";
+import { useSelector } from "react-redux";
 
 const ItemDetail = ({ route, navigation, category }) => {
-  const { id } = route.params;
-  const [product, setProduct] = useState({});
-  useEffect(() => {
-    const productFinded = allProduct.find((product) => product.id === id);
-    setProduct(productFinded);
-  }, [id]);
-
+  const product = useSelector((state) => state.shop.value.productSelected);
   const images = product.images ? product.images : [];
 
   return (
